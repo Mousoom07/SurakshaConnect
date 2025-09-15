@@ -1,0 +1,512 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Light, professional palette: light backgrounds, dark text */
+  --background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 40%, #e6ebf2 100%);
+  --foreground: #0b1324; /* deep slate for body text */
+  --card: rgba(255, 255, 255, 0.9);
+  --card-foreground: #0b1324;
+  --popover: #ffffff;
+  --popover-foreground: #0b1324;
+  --primary: #0ea5e9; /* professional blue */
+  --primary-foreground: #0b1324;
+  --secondary: #1e293b; /* darker accent for headings/buttons outline */
+  --secondary-foreground: #ffffff;
+  --muted: rgba(2, 6, 23, 0.06);
+  --muted-foreground: #334155; /* readable secondary text */
+  --accent: #f59e0b;
+  --accent-foreground: #111827;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: rgba(2, 6, 23, 0.12);
+  --input: rgba(255, 255, 255, 0.9);
+  --ring: rgba(14, 165, 233, 0.35);
+  --chart-1: #0ea5e9;
+  --chart-2: #22c55e;
+  --chart-3: #f59e0b;
+  --chart-4: #6366f1;
+  --chart-5: #ef4444;
+  --radius: 0.5rem;
+  --sidebar: rgba(255, 255, 255, 0.85);
+  --sidebar-foreground: #0b1324;
+  --sidebar-primary: #0ea5e9;
+  --sidebar-primary-foreground: #0b1324;
+  --sidebar-accent: #f59e0b;
+  --sidebar-accent-foreground: #0b1324;
+  --sidebar-border: rgba(2, 6, 23, 0.12);
+  --sidebar-ring: rgba(14, 165, 233, 0.35);
+}
+
+.dark {
+  /* Enhanced dark government theme */
+  --background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 100%);
+  --foreground: #f1f5f9;
+  --card: rgba(15, 23, 42, 0.95); /* Even darker cards for dark mode */
+  --card-foreground: #f1f5f9;
+  --popover: #0f172a; /* Darker popover */
+  --popover-foreground: #f1f5f9;
+  --primary: #ef4444;
+  --primary-foreground: #f1f5f9;
+  --secondary: rgba(30, 41, 59, 0.8); /* Dark secondary elements */
+  --secondary-foreground: #f1f5f9;
+  --muted: rgba(15, 23, 42, 0.7); /* Darker muted elements */
+  --muted-foreground: #cbd5e1;
+  --accent: #fbbf24;
+  --accent-foreground: #1a202c;
+  --destructive: #ef4444;
+  --destructive-foreground: #f1f5f9;
+  --border: rgba(30, 41, 59, 0.6); /* Darker borders */
+  --input: #1e293b; /* Darker inputs */
+  --ring: rgba(239, 68, 68, 0.3);
+  --chart-1: #ef4444;
+  --chart-2: #1e293b; /* Dark chart color */
+  --chart-3: #fbbf24;
+  --chart-4: #3b82f6;
+  --chart-5: #10b981;
+  --radius: 0.5rem;
+  --sidebar: rgba(15, 23, 42, 0.95);
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #ef4444;
+  --sidebar-primary-foreground: #f1f5f9;
+  --sidebar-accent: #fbbf24;
+  --sidebar-accent-foreground: #1a202c;
+  --sidebar-border: rgba(30, 41, 59, 0.6);
+  --sidebar-ring: rgba(239, 68, 68, 0.3);
+}
+
+/* Light gradient backgrounds */
+.gradient-bg {
+  background: var(--background);
+  min-height: 100vh;
+  position: relative;
+}
+
+.gradient-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* subtle, light accents */
+  background: radial-gradient(circle at 20% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(2, 6, 23, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Dark radial hero background for landing */
+.hero-radial {
+  /* Soft radial gradient: dark navy -> bluish */
+  background:
+    radial-gradient(1200px circle at 50% -20%, rgba(37, 99, 235, 0.20), transparent 60%),
+    radial-gradient(1000px circle at 85% 30%, rgba(14, 165, 233, 0.16), transparent 55%),
+    linear-gradient(180deg, #0b1324 0%, #0f1c37 60%, #132847 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated waves/particles */
+.hero-radial::before,
+.hero-radial::after {
+  content: "";
+  position: absolute;
+  inset: -20% -20% -20% -20%;
+  background:
+    radial-gradient(300px 120px at 20% 30%, rgba(59,130,246,0.08), transparent 60%),
+    radial-gradient(260px 100px at 80% 70%, rgba(236,72,153,0.08), transparent 60%);
+  animation: drift 24s linear infinite;
+  pointer-events: none;
+}
+.hero-radial::after { animation-duration: 32s; opacity: .7; }
+
+@keyframes drift {
+  0% { transform: translate3d(0,0,0) rotate(0deg); }
+  50% { transform: translate3d(2%, -3%, 0) rotate(2deg); }
+  100% { transform: translate3d(0,0,0) rotate(0deg); }
+}
+
+/* Pulsating red/blue emergency aura behind shield */
+.emergency-aura {
+  position: relative;
+}
+.emergency-aura::before, .emergency-aura::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 12px;
+  z-index: -1;
+  filter: blur(14px);
+}
+.emergency-aura::before { background: radial-gradient(circle, rgba(239,68,68,.25), transparent 60%); animation: aura 2.6s ease-in-out infinite; }
+.emergency-aura::after  { background: radial-gradient(circle, rgba(59,130,246,.25), transparent 60%); animation: aura 2.6s ease-in-out infinite reverse; }
+@keyframes aura { 0% { opacity:.6; } 50% { opacity: .9; } 100% { opacity:.6; } }
+
+/* Government-style card styling */
+.glass-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  color: var(--card-foreground);
+  backdrop-filter: blur(10px);
+}
+
+.dark .glass-card {
+  backdrop-filter: blur(15px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* --- UX: Custom Cursor Glow & Ripple + Parallax overlay --- */
+.ux-cursor-glow {
+  width: 28px;
+  height: 28px;
+  margin-left: -14px; /* center on pointer */
+  margin-top: -14px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(59,130,246,0.45), rgba(236,72,153,0.35) 60%, transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(10px) saturate(1.1);
+  transition: transform 60ms linear;
+}
+.dark .ux-cursor-glow {
+  background: radial-gradient(circle, rgba(59,130,246,0.6), rgba(236,72,153,0.5) 60%, transparent 70%);
+  filter: blur(12px) saturate(1.2);
+}
+
+.ux-cursor-ripple {
+  width: 4px; height: 4px; left: 0; top: 0;
+  border-radius: 9999px; opacity: 0; transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 0 rgba(59,130,246,0.35), 0 0 0 0 rgba(236,72,153,0.25);
+}
+.ux-ripple--play {
+  animation: ux-ripple 700ms ease-out 1;
+}
+@keyframes ux-ripple {
+  0% { opacity: .55; box-shadow: 0 0 0 0 rgba(59,130,246,0.35), 0 0 0 0 rgba(236,72,153,0.25); }
+  70% { opacity: .25; box-shadow: 0 0 0 22px rgba(59,130,246,0), 0 0 0 14px rgba(236,72,153,0); }
+  100% { opacity: 0; box-shadow: 0 0 0 26px rgba(59,130,246,0), 0 0 0 18px rgba(236,72,153,0); }
+}
+
+.ux-parallax-overlay {
+  background:
+    radial-gradient(500px 300px at 20% 15%, rgba(59,130,246,0.06), transparent 70%),
+    radial-gradient(600px 360px at 80% 85%, rgba(236,72,153,0.06), transparent 70%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Performance mode: reduce heavy effects on initial load */
+.perf-mode .glass-card { backdrop-filter: none; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+.perf-mode .brand-gradient { box-shadow: 0 6px 16px rgba(59,130,246,0.20); }
+.perf-mode .hover-glow:hover { box-shadow: 0 6px 18px rgba(236,72,153,0.18), 0 2px 8px rgba(59,130,246,0.15); }
+.perf-mode .hero-radial::before { display: none; }
+.perf-mode .hero-radial { background: linear-gradient(180deg, #0b1324 0%, #132847 100%); }
+
+/* Government-style gradient buttons */
+.shelter-gradient {
+  /* Light red gradient with dark text for accessibility on light bg */
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.08);
+  color: #0b1324;
+  border: 1px solid rgba(2, 6, 23, 0.12);
+}
+
+.emergency-gradient {
+  /* Light blue gradient with dark text */
+  background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.08);
+  color: #0b1324;
+  border: 1px solid rgba(2, 6, 23, 0.12);
+}
+
+/* Brand unified gradient for CTA buttons */
+.brand-gradient {
+  background: linear-gradient(135deg, #3b82f6 0%, #ec4899 100%);
+  color: white !important;
+  border: none;
+  box-shadow: 0 10px 25px rgba(59,130,246,0.25);
+}
+.brand-gradient:hover { filter: brightness(1.06); box-shadow: 0 12px 36px rgba(236, 72, 153, 0.28), 0 6px 16px rgba(59, 130, 246, 0.22); }
+
+/* Soft glow + slight scale on hover for lively interactions */
+.hover-glow { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.hover-glow:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(236, 72, 153, 0.25), 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* Unified gradient tile for icons/feature cards */
+.brand-tile {
+  background: linear-gradient(135deg, #3b82f6 0%, #ec4899 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 6px 18px rgba(59,130,246,0.22);
+}
+.brand-tile svg { color: white !important; }
+
+.alert-gradient {
+  background: linear-gradient(135deg, #fde68a 0%, #fbbf24 100%);
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.08);
+  color: #0b1324;
+  border: 1px solid rgba(2, 6, 23, 0.12);
+}
+
+/* Ensure icons on gradient tiles use dark color, overriding text-white in components */
+.shelter-gradient svg,
+.emergency-gradient svg,
+.alert-gradient svg {
+  color: #0b1324 !important; /* lucide icons use currentColor */
+}
+
+/* Section backgrounds for light theme */
+.section-dark {
+  background: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.dark .section-dark {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.section-darker {
+  background: rgba(2, 6, 23, 0.05);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+}
+
+.dark .section-darker {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+/* Government-style hover effects */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(59, 130, 246, 0.15), 0 4px 12px rgba(236, 72, 153, 0.12);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from {
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
+  }
+}
+
+/* Soft heartbeat pulse for icons */
+@keyframes pulse-soft {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: .95; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-pulse-soft { animation: pulse-soft 2.2s ease-in-out infinite; }
+
+/* Intro tilt-rotate for icons on first paint */
+@keyframes intro-tilt {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(8deg) scale(1.02); }
+  60% { transform: rotate(-6deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+.intro-rotate-once { animation: intro-tilt 900ms ease-out 1 both; will-change: transform; }
+
+/* Marquee scroll for banner */
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Enhanced text visibility for government theme */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Government typography improvements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--foreground);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  line-height: 1.6;
+  color: var(--foreground);
+}
+
+.text-muted-foreground {
+  /* Increase contrast for all muted text to remain readable on dark bg */
+  color: color-mix(in oklab, var(--muted-foreground), white 10%) !important;
+}
+
+/* Ensure all text is properly visible on government background */
+* {
+  color: inherit;
+}
+
+/* Government-style button styling */
+.btn-professional {
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+/* Developer credits styling for government theme */
+.developer-credits {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.9) 0%, rgba(30, 64, 175, 0.9) 100%);
+  border-top: 3px solid var(--accent);
+  color: var(--foreground);
+  backdrop-filter: blur(10px);
+}
+
+.dark .developer-credits {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+  color: var(--foreground);
+}
+
+/* Government seal-style decorative elements */
+.government-seal {
+  position: relative;
+}
+
+.government-seal::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  /* Changed white in gradient to dark slate */
+  background: conic-gradient(from 0deg, #dc2626, #fbbf24, #334155, #1e40af, #dc2626);
+  border-radius: 50%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+@theme inline {
+  /* Use DM Sans across the app for professional typography */
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* High contrast mode: boost text and border contrast globally */
+.high-contrast {
+  --foreground: #0b1324 !important;
+  --card-foreground: #0b1324 !important;
+  --muted-foreground: #0b1324 !important;
+  --border: rgba(2, 6, 23, 0.5) !important;
+  --ring: rgba(2, 6, 23, 0.5) !important;
+}
+
+/* High Contrast Accessibility Mode */
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --border: #ffffff;
+  --muted-foreground: #e5e7eb;
+}
+.high-contrast .text-muted-foreground { color: #e5e7eb !important; }
+.high-contrast a { text-decoration: underline; }
+.high-contrast :focus { outline: 3px solid #f59e0b !important; outline-offset: 2px; }
+.high-contrast .brand-gradient { filter: contrast(1.25) saturate(1.2); }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground font-sans;
+    /* Light theme: remove dark overlay */
+    background: var(--background);
+  }
+}
+
+/* Button press micro-bounce */
+.button-press:active { transform: translateY(1px) scale(0.985); }
+
+/* Icon hover glow */
+.icon-hover-glow { transition: filter .2s ease, transform .2s ease; }
+.icon-hover-glow:hover { filter: drop-shadow(0 6px 14px rgba(59,130,246,.35)) drop-shadow(0 3px 10px rgba(236,72,153,.25)); transform: translateY(-1px) scale(1.03); }
+
+/* Progressive focus-in for hero */
+@keyframes focus-in { from { filter: blur(12px); opacity: 0; } to { filter: blur(0); opacity: 1; } }
+.progressive-focus { animation: focus-in .8s ease-out both; }
+
+/* Flip-in for counter updates */
+@keyframes flip-in { 0% { transform: rotateX(90deg); opacity: .25; } 100% { transform: rotateX(0); opacity: 1; } }
+.flip-in { transform-origin: center bottom; animation: flip-in .45s ease-out; }
+
+/* Day hero variant */
+.day-hero {
+  background:
+    radial-gradient(1200px circle at 50% -20%, rgba(59,130,246,0.14), transparent 60%),
+    radial-gradient(1000px circle at 85% 30%, rgba(236,72,153,0.12), transparent 55%),
+    linear-gradient(180deg, #f0f7ff 0%, #e8f1ff 60%, #eaf2ff 100%);
+}
